@@ -72,8 +72,6 @@ export default class ParticipantView extends Component<Props, State> {
         ? streams.find(s => s.type == 'Camera')
         : undefined;
 
-      console.log({cameraStream});
-
       if (!this.videoView) return;
       if (cameraStream && cameraStream.hasVideoTracks) {
         const user = new Participant(participant); //we only need a pointer to the native
@@ -109,8 +107,6 @@ export default class ParticipantView extends Component<Props, State> {
     };
 
     if (!this.participant) return null;
-
-    console.log({participant: this.participant});
 
     return (
       <View

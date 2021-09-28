@@ -72,18 +72,16 @@ export const checkCameraPermission = async (): Promise<boolean> => {
 
 export const turnCamera = async (): Promise<boolean> => {
   const haveCameraPermission = await checkCameraPermission();
-  console.log({haveCameraPermission});
 
   if (!haveCameraPermission) {
     const result = await request(CAMERA_PERMISSION);
-    console.log({haveCameraPermission, result});
     return false;
   }
   try {
     await VoxeetSDK.startVideo();
     return true;
   } catch (e) {
-    console.log('stopVideo error', e);
+    console.error(e);
     return false;
   }
 };

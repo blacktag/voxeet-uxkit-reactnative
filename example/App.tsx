@@ -54,10 +54,6 @@ export default class App extends Component<Props, State> {
 
   private onStatus = (status: ConferenceStatusUpdatedEvent) => {
     this.setState({status});
-    console.log({status, state: this.state});
-    // if (status.status === 'CREATED') {
-    //   this.join();
-    // }
   };
 
   private onInit = () => {
@@ -72,21 +68,18 @@ export default class App extends Component<Props, State> {
 
     await new Promise(resolve => setTimeout(resolve, 1000));
 
-    const camera = await turnCamera();
-    console.log('turn camera', {camera});
+    await turnCamera();
 
     const conference = await VoxeetSDK.create({
       alias: CONFERENCE_ALIAS,
     });
 
-    console.log('join', {conference: conference});
-    const conf = await VoxeetSDK.join(conference.conferenceId, {
+    await VoxeetSDK.join(conference.conferenceId, {
       user: {
         type: UserType.USER,
       },
     });
 
-    console.log('joined', {conf});
     await new Promise(resolve => setTimeout(resolve, 1000));
   };
 
