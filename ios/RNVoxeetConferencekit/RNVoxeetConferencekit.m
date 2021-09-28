@@ -9,7 +9,6 @@
 #import "RNVoxeetConferencekit.h"
 
 @import VoxeetSDK;
-@import VoxeetUXKit;
 
 @interface RNVoxeetConferencekit()
 
@@ -38,9 +37,6 @@ RCT_EXPORT_METHOD(initialize:(NSString *)consumerKey
         [VoxeetSDK.shared initializeWithConsumerKey:consumerKey consumerSecret:consumerSecret];
 
         self->_deactivatedOverlay = deactivateOverlay;
-        if (!deactivateOverlay) {
-            [VoxeetUXKit.shared initialize];
-        }
 
         resolve(nil);
     });
@@ -63,9 +59,6 @@ RCT_EXPORT_METHOD(initializeToken:(NSString *)accessToken
         }];
 
         self->_deactivatedOverlay = deactivateOverlay;
-        if (!deactivateOverlay) {
-            [VoxeetUXKit.shared initialize];
-        }
         
         resolve(nil);
     });
@@ -360,8 +353,6 @@ RCT_EXPORT_METHOD(sendBroadcastMessage:(NSString *)message
 RCT_EXPORT_METHOD(appearMaximized:(BOOL)enable)
 {
     dispatch_async(dispatch_get_main_queue(), ^{
-        if (self->_deactivatedOverlay) return;
-        [VoxeetUXKit.shared setAppearMaximized:enable];
     });
 }
 
@@ -385,7 +376,6 @@ RCT_EXPORT_METHOD(isTelecomMode:(RCTPromiseResolveBlock)resolve
         resolve([NSNumber numberWithBool:FALSE]);
         return;
     }
-    resolve([NSNumber numberWithBool:VoxeetUXKit.shared.telecom]);
 }
 
 RCT_EXPORT_METHOD(defaultVideo:(BOOL)enable)
