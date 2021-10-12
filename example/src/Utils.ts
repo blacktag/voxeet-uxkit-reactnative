@@ -45,12 +45,15 @@ export function inConference(status: ConferenceStatusUpdatedEvent) {
   }
 }
 
-export const createConferenceParticipant = () =>
-  new ConferenceParticipant(
-    Date.now().toString(),
-    `user_${Date.now()}`,
-    'https://i.pravatar.cc/300',
+export const createConferenceParticipant = () => {
+  const id = Date.now();
+
+  return new ConferenceParticipant(
+    id.toString(),
+    `user_${id}`,
+    `https://i.pravatar.cc/300?u=${id}`,
   );
+};
 
 export const CAMERA_PERMISSION: Permission | undefined = Platform.select({
   android: PERMISSIONS.ANDROID.CAMERA,
