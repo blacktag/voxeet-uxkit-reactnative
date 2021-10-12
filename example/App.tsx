@@ -24,6 +24,7 @@ import {
   VoxeetSDK,
 } from '@voxeet/react-native-voxeet-conferencekit';
 import {UserType} from '@voxeet/react-native-voxeet-conferencekit/dist/types/JoinConference';
+import {Codec} from '@voxeet/react-native-voxeet-conferencekit/dist/types/CreateConference';
 
 export interface Props {}
 
@@ -66,12 +67,11 @@ export default class App extends Component<Props, State> {
     const participant = createConferenceParticipant();
     await VoxeetEnvironment.connect(participant);
 
-    await new Promise(resolve => setTimeout(resolve, 1000));
-
-    await turnCamera();
-
     const conference = await VoxeetSDK.create({
       alias: CONFERENCE_ALIAS,
+      params: {
+        videoCodec: Codec.VP8,
+      },
     });
 
     await VoxeetSDK.join(conference.conferenceId, {
@@ -80,7 +80,7 @@ export default class App extends Component<Props, State> {
       },
     });
 
-    await new Promise(resolve => setTimeout(resolve, 1000));
+    await turnCamera();
   };
 
   render() {
