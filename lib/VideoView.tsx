@@ -162,7 +162,6 @@ export default class VideoView extends Component<Props, State> {
   }
   
   _onEvent = (event: VideoViewAsyncCallResult) => {
-    console.warn("event is", event);
     if(!event) return;
     const { requestId, error, message, peerId, streamId, attach, isAttached} = event;
     const promise = this._requestMap[requestId];
